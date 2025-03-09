@@ -1,38 +1,40 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-const UserProfileSchema = new mongoose.Schema({
-    isActive : {
-        type : Boolean,
-        default : true
+const UserProfileSchema = new mongoose.Schema(
+  {
+    isActive: {
+      type: Boolean,
+      default: true,
     },
-    image :  {
-        type : String,
-        default :''
-    },
-
-    SecondaryEmail : {
-        type : String,
-        default : ''
+    image: {
+      type: String,
+      default: '',
     },
 
-    isUser : {
-        type : Boolean,
-        default : true
+    SecondaryEmail: {
+      type: String,
+      default: '',
     },
 
-    location : {
-        type : String,
-        default : ''
+    isUser: {
+      type: Boolean,
+      default: true,
     },
-    user : {
-        type : mongoose.Schema.Types.ObjectId,
-        ref : 'User',
-        required : [true,'User Must be Required']
-    }
-}, {
-    timestamps : true
-})
 
+    location: {
+      type: String,
+      default: '',
+    },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: [true, 'User Must be Required'],
+    },
+  },
+  {
+    timestamps: true,
+  },
+);
 
-const UserProfile = mongoose.model('UserProfile',UserProfileSchema)
-export default UserProfile
+const UserProfile = mongoose.model('UserProfile', UserProfileSchema);
+export default UserProfile;

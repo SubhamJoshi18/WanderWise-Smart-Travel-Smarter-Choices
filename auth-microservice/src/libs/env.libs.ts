@@ -1,14 +1,8 @@
-import dotenv from 'dotenv'
-dotenv.config()
+import dotenv from 'dotenv';
+dotenv.config();
 
+const getEnvValue = (key: string): string | undefined => {
+  return process.env[key];
+};
 
-
-const getEnvValue = (key : string) : string => {
-    return process.env[key];
-}
-
-
-
-export {
-    getEnvValue
-}
+export { getEnvValue };
