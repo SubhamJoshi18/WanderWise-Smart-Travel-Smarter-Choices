@@ -1,5 +1,4 @@
-import mongoose from 'mongoose';
-import { boolean } from 'zod';
+import mongoose from 'mongoose'
 
 const userModel = new mongoose.Schema(
   {
@@ -19,7 +18,7 @@ const userModel = new mongoose.Schema(
     },
 
     isActive: {
-      type: boolean,
+      type: Boolean,
       default: true,
     },
 
