@@ -1,6 +1,7 @@
 import { getEnvValue } from '../libs/env.libs';
-import { Request, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+
 declare global {
   namespace Express {
     interface Request {
@@ -14,9 +15,9 @@ async function checkToken(req: Request, res: Response, next: NextFunction) {
   if (!readToken) {
     throw new Error('No token available');
   } else {
-    const secretkey = getEnvValue('SECRET') as string;
+    const secretkey = getEnvValue('SECRETS') as string;
     const payload = jwt.verify(readToken, secretkey);
-    req.user = payload;
+    req.user = payload
     next();
   }
 }

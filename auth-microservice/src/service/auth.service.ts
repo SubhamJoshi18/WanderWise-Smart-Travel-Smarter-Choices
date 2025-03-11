@@ -1,3 +1,4 @@
+import { Types } from 'mongoose';
 import { DatabaseExceptions } from '../exceptions';
 import { ILoginBody, ISignupBody } from '../interface/auth.interface';
 import { getEnvValue } from '../libs/env.libs';
@@ -6,6 +7,8 @@ import {
   deactivateaccount,
   getEmail,
   saveData,
+  saveUserProfileData,
+  updatedUserProfile,
 } from '../repository/auth.repo';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -28,7 +31,13 @@ async function signupService(body: ISignupBody) {
   };
 
   const savedata = await saveData(payload);
-  return savedata;
+  const savedDataId = savedata._id
+  const saveUserProfile = await saveUserProfileData(savedDataId as unknown as string)
+  const userProfileUpdated = await updatedUserProfile(savedDataId as unknown as string,saveUserProfile._id as unknown as string)
+  return {
+    user : saveData,
+    userProfile : saveUserProfile
+  }
 }
 async function loginService(body: ILoginBody) {
   const { email, password } = body;

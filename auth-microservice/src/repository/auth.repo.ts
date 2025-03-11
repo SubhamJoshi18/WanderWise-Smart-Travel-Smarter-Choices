@@ -11,7 +11,7 @@ async function saveData(data: ISignupBody) {
   return res;
 }
 async function deactivateaccount(data: any) {
-  const res = await UserProfile.updateOne(
+  const res = await User.updateOne(
     { _id: data },
     { isActive: false },
     { $new: true },
@@ -19,11 +19,33 @@ async function deactivateaccount(data: any) {
   return res;
 }
 async function activateaccount(data: any) {
-  const res = await UserProfile.updateOne(
+  const res = await User.updateOne(
     { _id: data },
     { isActive: true },
     { $new: true },
   );
   return res;
 }
-export { getEmail, saveData, deactivateaccount, activateaccount };
+
+async function saveUserProfileData(userId:string) {
+  const res = await UserProfile.create(
+    {user : userId}
+  )
+  return res
+}
+
+async function updatedUserProfile(userId:string,saveId:string){
+  const res = await User.updateOne(
+    {
+      _id : userId
+    },
+    {
+      userProfile : saveId
+    },
+    {
+      $new : true
+    }
+  )
+  return res
+}
+export { getEmail, saveData, deactivateaccount, activateaccount ,saveUserProfileData,updatedUserProfile};

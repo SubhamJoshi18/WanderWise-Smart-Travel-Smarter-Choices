@@ -2,10 +2,6 @@ import mongoose from 'mongoose';
 
 const UserProfileSchema = new mongoose.Schema(
   {
-    isActive: {
-      type: Boolean,
-      default: true,
-    },
     image: {
       type: String,
       default: '',
