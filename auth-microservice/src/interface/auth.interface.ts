@@ -10,3 +10,7 @@ interface ILoginBody {
 }
 
 export { ISignupBody, ILoginBody };
+interface IforgetPasswordBody {
+  email: string;
+}
+export { IforgetPasswordBody };
