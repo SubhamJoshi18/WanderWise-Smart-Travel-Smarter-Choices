@@ -1,3 +1,4 @@
+import { DatabaseExceptions } from '../exceptions';
 import { ILoginBody, ISignupBody } from '../interface/auth.interface';
 import { getEnvValue } from '../libs/env.libs';
 import { getEmail, saveData } from '../repository/auth.repo';
@@ -9,7 +10,7 @@ async function signupService(body: ISignupBody) {
   const senddetails = await getEmail(email);
 
   if (senddetails) {
-    throw new Error('Email exists');
+    throw new DatabaseExceptions('Email exists');
   }
 
   const genSalt = await bcrypt.genSalt(10);
@@ -29,14 +30,14 @@ async function loginService(body: ILoginBody) {
   const getemail = await getEmail(email);
 
   if (!getemail) {
-    throw new Error('No existing email');
+    throw new DatabaseExceptions('No existing email');
   }
 
   const dbpassword = getemail.password;
   const comparepassword = await bcrypt.compare(password, dbpassword);
 
   if (!comparepassword) {
-    throw new Error('Wrong password');
+    throw new DatabaseExceptions('Wrong password');
   }
   const payload = {
     email: getemail.email,

@@ -1,8 +1,12 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { loginService, signupService } from '../service/auth.service';
 import { ISignupBody } from '../interface/auth.interface';
 
-async function signupController(req: Request, res: Response) {
+async function signupController(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
   try {
     const body = req.body;
     const apiResponse = await signupService(body as ISignupBody);
@@ -11,11 +15,15 @@ async function signupController(req: Request, res: Response) {
       data: apiResponse,
     });
   } catch (err: any) {
-    throw new Error(err);
+    next(err);
   }
 }
 
-async function loginController(req: Request, res: Response) {
+async function loginController(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
   try {
     const body = req.body;
     const apiResponse = await loginService(body);
@@ -23,6 +31,8 @@ async function loginController(req: Request, res: Response) {
       message: 'Login Completed',
       data: apiResponse,
     });
-  } catch (err) {}
+  } catch (err) {
+    next(err);
+  }
 }
 export { signupController, loginController };
