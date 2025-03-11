@@ -51,7 +51,7 @@ export async function findUser(userId:string) {
     const user=User.findOne({_id:userId})
     return user
 }
-export async function updatePassword(userDoc:object,userId:string, hashNewPassword:string)   
+export async function updatePassword(userDoc:any,userId:string, hashNewPassword:string)   
 
 
 

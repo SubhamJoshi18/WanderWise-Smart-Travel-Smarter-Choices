@@ -43,6 +43,12 @@ async function resetPassword(req:Request,res:Response,next:NextFunction){
         }
     }
 
+
+export {
+  forgetPasswordController,
+  checkResetLink,
+  resetPassword
+}
     
 
 
