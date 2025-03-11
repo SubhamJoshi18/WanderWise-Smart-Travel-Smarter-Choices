@@ -2,7 +2,6 @@
   "name": "auth-microservice",
   "version": "1.0.0",
   "main": "index.js",
-  "type":"module",
   "scripts": {
     "build": "tsc --build",
     "start:prod": "npm run build && node ./dist/index.js",
@@ -16,11 +15,13 @@
   "description": "",
   "dependencies": {
     "@types/bcrypt": "^5.0.2",
+    "@types/jsonwebtoken": "^9.0.9",
     "@types/morgan": "^1.9.9",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.7",
     "eslint-define-config": "^2.1.0",
     "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.12.1",
     "morgan": "^1.10.0",
     "nodemon": "^3.1.9",

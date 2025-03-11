@@ -1,6 +1,6 @@
 
 import { Request,Response } from "express"
-import { signupService } from "../service/auth.service";
+import {  loginService, signupService } from "../service/auth.service";
 import { ISignupBody } from "../interface/auth.interface";
 
 
@@ -19,6 +19,21 @@ async function signupController(req:Request,res:Response){
 
     }
 }
+
+async function loginController(req:Request,res:Response){
+    try{
+        const body = req.body;
+        const apiResponse=await loginService(body);
+        res.status(201).json({
+            message:'Login Completed'
+        })
+
+    }
+    catch(err){
+
+    }
+}
 export{
-    signupController
+    signupController,
+    loginController
 }
