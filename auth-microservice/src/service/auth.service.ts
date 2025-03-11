@@ -1,7 +1,12 @@
 import { DatabaseExceptions } from '../exceptions';
 import { ILoginBody, ISignupBody } from '../interface/auth.interface';
 import { getEnvValue } from '../libs/env.libs';
-import { getEmail, saveData } from '../repository/auth.repo';
+import {
+  activateaccount,
+  deactivateaccount,
+  getEmail,
+  saveData,
+} from '../repository/auth.repo';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
@@ -40,8 +45,8 @@ async function loginService(body: ILoginBody) {
     throw new DatabaseExceptions('Wrong password');
   }
   const payload = {
+    id: getemail._id,
     email: getemail.email,
-    username: getemail.username,
     password: getemail.password,
   };
 
@@ -55,5 +60,13 @@ async function loginService(body: ILoginBody) {
   const accesstoken = jwt.sign(payload, secretkey, options);
   return accesstoken;
 }
+async function deactivateService(body: any) {
+  const deactivate = await deactivateaccount(body);
+  return deactivate;
+}
+async function activateService(body: any) {
+  const deactivate = await activateaccount(body);
+  return deactivate;
+}
 
-export { signupService, loginService };
+export { signupService, loginService, deactivateService, activateService };
