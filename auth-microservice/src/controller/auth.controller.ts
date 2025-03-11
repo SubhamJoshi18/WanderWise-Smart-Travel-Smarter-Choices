@@ -1,7 +1,7 @@
 import { Request ,Response,NextFunction} from "express";
 import { wanderLogger } from "../libs/logger.libs";
-import { forgetPasswordSchema } from "../validation/auth.validation";
-import forgetPasswordService from "../services/auth.services";
+import { forgetPasswordSchema, resetPasswordSchema } from "../validation/auth.validation";
+import {forgetPasswordService, checkResetToken, resetPasswordServices } from "../services/auth.services";
 import { IforgetPasswordBody } from "../interface/auth.interface";
 
 async function forgetPasswordController(req:Request, res:Response, next:NextFunction) {
@@ -13,9 +13,37 @@ async function forgetPasswordController(req:Request, res:Response, next:NextFunc
             response:apiResponse
         })}
     catch (err: any) {
-        wanderLogger.error("Error in forgetting password")
+        next(err)
     }
 }
+async function checkResetLink(req:Request,res:Response,next:NextFunction) {
+            try{
+                const tokenId = req.params.tokenId
+                const apiResposne = await checkResetToken(tokenId)
+                const contentMessage = `The Provided Token is Valid`
+                
+                return res.status(200).json({
+                    response: apiResposne
+                }) }catch(err){
+                next(err)
+        }
+}
+async function resetPassword(req:Request,res:Response,next:NextFunction){
+        try{
+            const tokenId = req.params.tokenId
+            const userId = req.params.userId
+            const content = await resetPasswordSchema.parseAsync(req.body)
+            const apiResposne = await resetPasswordServices(tokenId,userId,content)
+            const contentMessage = `The Provided Token is Valid`
+            return res.status(200).json({
+                response:apiResposne
+            })
+        }catch(err){
+            next(err)
+        }
+    }
+
+    
 
 
 
