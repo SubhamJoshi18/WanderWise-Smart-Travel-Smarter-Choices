@@ -3,6 +3,7 @@ import { ILoginBody, ISignupBody } from '../interface/auth.interface';
 import { getEnvValue } from '../libs/env.libs';
 import {
   createToken,
+  createUserProfile,
   findCorrelationIdAuth,
   findEmailRepo,
   findToken,
@@ -10,6 +11,7 @@ import {
   getEmail,
   saveData,
   updatePassword,
+  updateUserProfile,
 } from '../repository/auth.repo';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -38,6 +40,17 @@ async function signupService(body: ISignupBody) {
   };
 
   const savedata = await saveData(payload);
+  const savedDataId = savedata._id;
+  const saveUserProfile = await createUserProfile(savedDataId);
+  const updatedUserProfile = await updateUserProfile(
+    savedDataId,
+    saveUserProfile._id,
+  );
+  return {
+    user: savedata,
+    userProfile: saveUserProfile,
+  };
+
   return savedata;
 }
 async function loginService(body: ILoginBody) {
@@ -88,7 +101,7 @@ async function forgetPasswordService(parseBody: IforgetPasswordBody) {
   const userId = findEmail._id;
   const insertResult = await createToken(corelationIdAuth, userId);
 
-  const url = `http://localhost:${getEnvValue('PORT')}/api/reset-password/${corelationIdAuth}/${userId}`;
+  const url = `http://localhost:${getEnvValue('FRONTEND_PORT')}/reset-password/${corelationIdAuth}/${userId}`;
   const htmlContent = generateHtmlContent(url);
   const subject = 'Password Reset';
   const sendMail = await sendEmail(
@@ -158,4 +171,10 @@ async function resetPasswordServices(
       };
 }
 
-export { signupService, loginService , forgetPasswordService, checkResetToken,resetPasswordServices};
+export {
+  signupService,
+  loginService,
+  forgetPasswordService,
+  checkResetToken,
+  resetPasswordServices,
+};

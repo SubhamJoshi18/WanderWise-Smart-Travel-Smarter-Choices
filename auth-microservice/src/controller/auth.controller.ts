@@ -77,9 +77,9 @@ async function checkResetLink(req: Request, res: Response, next: NextFunction) {
     next(err);
   }
 }
-async function resetPassword(req: Request, res: Response, next: NextFunction)  {
+async function resetPassword(req: Request, res: Response, next: NextFunction) {
   try {
-    const tokenId = req.params.tokenId;
+    const tokenId = req.params.coRelationId;
     const userId = req.params.userId;
     const content = await resetPasswordSchema.parseAsync(req.body);
     const apiResposne = await resetPasswordServices(tokenId, userId, content);
