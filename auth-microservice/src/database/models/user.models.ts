@@ -1,47 +1,42 @@
-import mongoose from "mongoose";
-import { boolean } from "zod";
+import mongoose from 'mongoose';
 
-
-const userModel = new mongoose.Schema({
-
-
-    email : {
-        type : String,
-        required : [true,'Email Must be Required']
+const userModel = new mongoose.Schema(
+  {
+    email: {
+      type: String,
+      required: [true, 'Email Must be Required'],
     },
 
-    password : {
-        type : String,
-        required : [true,'Email Must be Required']
+    password: {
+      type: String,
+      required: [true, 'Email Must be Required'],
     },
 
-    username : {
-        type : String,
-        required : [true,'Email Must be Required']
+    username: {
+      type: String,
+      required: [true, 'Email Must be Required'],
     },
 
-
-    isActive : {
-        type : boolean,
-        default : true
-        
+    isActive: {
+      type: Boolean,
+      default: true,
     },
 
-    role : {
-        type : String,
-        enum : ['Guide','Admin','User'],
-        default : 'User'
+    role: {
+      type: String,
+      enum: ['Guide', 'Admin', 'User'],
+      default: 'User',
     },
 
-    userProfile : {
-        type : mongoose.Schema.Types.ObjectId,
-        ref : 'UserProfile'
-    }
+    userProfile: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'UserProfile',
+    },
+  },
+  {
+    timestamps: true,
+  },
+);
 
-
-}, {
-    timestamps : true
-})
-
-const User = mongoose.model('User',userModel)
-export default User
+const User = mongoose.model('User', userModel);
+export default User;

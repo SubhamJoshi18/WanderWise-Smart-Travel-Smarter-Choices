@@ -1,9 +1,8 @@
-const subject = "Reset Your Password - Secure Your Account Today";
-const orderSubject = "Order Confirmation"
+const subject = 'Reset Your Password - Secure Your Account Today';
+const orderSubject = 'Order Confirmation';
 
-const generateHtmlContent = (url) => {
-
-    const htmlContent = `
+const generateHtmlContent = (url : string) => {
+  const htmlContent = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -81,16 +80,7 @@ const generateHtmlContent = (url) => {
 </body>
 </html>
 `;
-return htmlContent
+  return htmlContent;
+};
 
-}
-
-
-
-
-export {
-    subject,
-    orderSubject,
-    generateHtmlContent
-
-}
+export { subject, orderSubject, generateHtmlContent };

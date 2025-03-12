@@ -1,9 +1,17 @@
-import { Router } from "express";
-import {forgetPasswordController,  checkResetLink } from "../controller/auth.controller";
-import { any } from "zod";
-import { updatePassword } from "../repository/auth.repository";
+import { Router } from 'express';
+import forgetPasswordController, {
+  checkResetLink,
+  loginController,
+  resetPassword,
+  signupController,
+} from '../controller/auth.controller';
+
 const authRouter = Router();
-authRouter.post("/auth/forgetPassword", forgetPasswordController)
-authRouter.get("/auth/check-link/:u", checkResetLink)
-authRouter.post("/auth/reset-password/:tokenId/:userId",updatePassword)
+
+authRouter.post('/auth/signup', signupController);
+authRouter.post('/auth/login', loginController);
+authRouter.post('/auth/forgetPassword', forgetPasswordController);
+authRouter.post('/auth/checkPassword', checkResetLink);
+authRouter.post('/auth/resetPassword', resetPassword);
+
 export default authRouter;
