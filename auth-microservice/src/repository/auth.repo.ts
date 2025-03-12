@@ -1,6 +1,7 @@
 import User from '../database/models/user.models';
 import Token from '../database/models/token.models';
 import { ISignupBody } from '../interface/auth.interface';
+import UserProfile from '../database/models/userProfile.models';
 
 async function getEmail(email: string) {
   const res = await User.findOne({ email: email });
@@ -12,7 +13,7 @@ async function saveData(data: ISignupBody) {
 }
 
 export async function findEmailRepo(email: string) {
-  const result = await User.find({ email: email });
+  const result = await User.findOne({ email: email });
 
   return result;
 }
@@ -57,6 +58,28 @@ export async function updatePassword(
     },
   );
   return updatedResult;
+}
+
+export async function createUserProfile(userId: any) {
+  const result = await UserProfile.create({
+    user: userId,
+  });
+  return result;
+}
+
+export async function updateUserProfile(userId: any, userProfileId: any) {
+  const result = await User.updateOne(
+    {
+      _id: userId,
+    },
+    {
+      userProfile: userId,
+    },
+    {
+      $new: true,
+    },
+  );
+  return result;
 }
 
 export { getEmail, saveData };
