@@ -14,7 +14,7 @@ class BcryptHelper {
   async comparePassword(password: string, oldPassword: string) {
     const compareStatus = await bcrypt.compare(password, oldPassword);
     return compareStatus;
-  }
+    }
 }
 
 export default new BcryptHelper();
